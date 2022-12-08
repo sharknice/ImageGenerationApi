@@ -15,8 +15,8 @@ namespace ImageGenerationApi.Controllers
             client = httpClient;
         }
 
-        [HttpPost]
-        public async Task<string> PostAsync(string text)
+        [HttpGet]
+        public async Task<FileContentResult> GetAsync(string text)
         {
             dynamic request = new System.Dynamic.ExpandoObject();
             request.fn_index = 50;
@@ -74,8 +74,7 @@ namespace ImageGenerationApi.Controllers
             var path = $"M:\\ImageAI\\stable-diffusion-webui\\outputs\\txt2img-images\\{Path.GetFileName(data.name)}";
 
             byte[] imageBits = System.IO.File.ReadAllBytes(path);
-            var imageBase64 = Convert.ToBase64String(imageBits);
-            return imageBase64;
+            return File(imageBits, "image/jpeg");
         }
     }
 }
